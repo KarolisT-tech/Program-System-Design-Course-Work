@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="166.0" prefWidth="400.0" stylesheets="@background_style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.kursinisgame.controllers.WonController">
+   <children>
+      <Text fill="#000300" layoutX="100.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Congratulations!">
+         <font>
+            <Font name="Arial Bold" size="25.0" />
+         </font>
+      </Text>
+      <Text layoutX="100.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You finished with:">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+      </Text>
+      <TextField fx:id="finishBalanceTF" layoutX="226.0" layoutY="86.0" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #FFFF;" />
+      <Button fx:id="endB" layoutX="162.0" layoutY="126.0" mnemonicParsing="false" onAction="#endGame" style="-fx-background-color: #FF2626;" text="END GAME" textFill="WHITE" />
+   </children>
+</AnchorPane>
