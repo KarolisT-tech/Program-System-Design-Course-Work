@@ -7,6 +7,7 @@ import com.example.kursinisgame.models.Player;
 import com.example.kursinisgame.models.TradingGame;
 import com.sun.tools.javac.Main;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -15,14 +16,17 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class AssetSellerForm {
-    public TextField assetQntTF;
-    public Button confirmB;
-    public Button cancelB;
+    @FXML
+    private TextField assetQntTF;
+    @FXML
+    private Button confirmB;
+    @FXML
+    private Button cancelB;
 
-    public Player player;
-    public Asset asset;
-    public MainForm main;
-    public TradingGame game;
+    private Player player;
+    private Asset asset;
+    private MainForm main;
+    private TradingGame game;
 
     public void setData(Player player, Asset asset, MainForm mainForm, TradingGame game) {
         this.player = player;

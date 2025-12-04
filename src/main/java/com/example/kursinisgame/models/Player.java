@@ -2,14 +2,17 @@ package com.example.kursinisgame.models;
 
 public class Player {
 
-    public double balance;
-    public int assetQnt;
-    public int movesLeft;
+    private static final int INITIAL_MOVES = 15;
+    private static final int INITIAL_ASSET_QNT = 0;
+
+    private double balance;
+    private int assetQnt;
+    private int movesLeft;
 
     public Player(double balance) {
         this.balance = balance;
-        this.assetQnt = 0;
-        this.movesLeft = 15;
+        this.assetQnt = INITIAL_ASSET_QNT;
+        this.movesLeft = INITIAL_MOVES;
     }
 
     public double getBalance() {

@@ -16,8 +16,8 @@ public class WonController {
     @FXML
     public Button endB;
 
-    Player winner;
-    Asset assets;
+    private Player winner;
+    private Asset assets;
 
     public void setData(Player winner, Asset assets) {
         this.winner = winner;

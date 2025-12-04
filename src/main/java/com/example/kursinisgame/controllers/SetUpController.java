@@ -3,9 +3,7 @@ package com.example.kursinisgame.controllers;
 import com.example.kursinisgame.HelloApplication;
 import com.example.kursinisgame.helpers.AlertGenerator;
 import com.example.kursinisgame.helpers.InputValidator;
-import com.example.kursinisgame.models.Asset;
-import com.example.kursinisgame.models.Models;
-import com.example.kursinisgame.models.Player;
+import com.example.kursinisgame.models.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,17 +22,19 @@ import java.util.ResourceBundle;
 
 public class SetUpController implements Initializable {
     @FXML
-    public TextField startBalanceTF;
+    private ComboBox<AssetType> assetTypeCB;
     @FXML
-    public TextField startAssetPriceTF;
+    private TextField startBalanceTF;
     @FXML
-    public Button startGameB;
+    private TextField startAssetPriceTF;
     @FXML
-    public ComboBox<Models> modelCB;
+    private Button startGameB;
+    @FXML
+    private ComboBox<Models> modelCB;
 
     public void StartGame(ActionEvent actionEvent) throws IOException {
 
-        if(startBalanceTF.getText().isBlank() || startAssetPriceTF.getText().isBlank() || modelCB.getSelectionModel().getSelectedItem() == null) {
+        if(startBalanceTF.getText().isBlank() || startAssetPriceTF.getText().isBlank() || modelCB.getSelectionModel().getSelectedItem() == null || assetTypeCB.getSelectionModel().getSelectedItem() == null) {
             AlertGenerator.generateAlert(Alert.AlertType.INFORMATION, "Error Starting Game", "Missing Data", "Please Fill In All Fields To Start!");
             return;
         }
@@ -47,7 +47,7 @@ public class SetUpController implements Initializable {
         Parent parent = fxmlLoader.load();
 
         Player player = new Player(Double.parseDouble(startBalanceTF.getText()));
-        Asset asset = new Asset(Double.parseDouble(startAssetPriceTF.getText()), modelCB.getValue());
+        Asset asset = AssetFactory.createAsset(Double.parseDouble(startAssetPriceTF.getText()), modelCB.getValue(), assetTypeCB.getValue());
 
         MainForm mainForm = (MainForm) fxmlLoader.getController();
         mainForm.setData(player, asset);
@@ -65,5 +65,6 @@ public class SetUpController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         modelCB.getItems().addAll(Models.values());
+        assetTypeCB.getItems().addAll(AssetType.values());
     }
 }

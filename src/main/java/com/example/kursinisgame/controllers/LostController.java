@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class LostController {
 
     @FXML
-    public Button endGameB;
+    private Button endGameB;
 
     public void closeAll(ActionEvent actionEvent) {
 

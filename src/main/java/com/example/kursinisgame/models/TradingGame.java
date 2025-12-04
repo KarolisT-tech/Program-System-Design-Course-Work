@@ -2,7 +2,7 @@ package com.example.kursinisgame.models;
 
 public class TradingGame {
 
-    public Player player;
+    private Player player;
 
     public TradingGame(Player player) {
         this.player = player;

@@ -23,31 +23,31 @@ import static java.lang.Math.round;
 public class MainForm {
 
     @FXML
-    public TextField myAssetsTF;
+    private TextField myAssetsTF;
     @FXML
-    public TextField assetPriceTf;
+    private TextField assetPriceTf;
     @FXML
-    public TextField assetPriceTaxTF;
+    private TextField assetPriceTaxTF;
     @FXML
-    public Button buyB;
+    private Button buyB;
     @FXML
-    public Button holdB;
+    private Button holdB;
     @FXML
-    public Button sellB;
+    private Button sellB;
     @FXML
-    public TextField numberOfMovesTF;
+    private TextField numberOfMovesTF;
     @FXML
-    public Button stopGameB;
+    private Button stopGameB;
     @FXML
-    public TextField myBalanceTF;
+    private TextField myBalanceTF;
     @FXML
-    public TextField smaTF;
+    private TextField smaTF;
     @FXML
-    public TextField taxTF;
+    private TextField taxTF;
 
-    Player player;
-    Asset asset;
-    TradingGame game;
+    private Player player;
+    private Asset asset;
+    private TradingGame game;
 
     public void setData(Player player, Asset asset) {
         this.player = player;
@@ -85,20 +85,11 @@ public class MainForm {
         }
         player.setBalance(player.getBalance() - asset.getAssetPrice());
         player.setAssetQnt(player.getAssetQnt() + 1);
-        player.setMovesLeft(player.getMovesLeft() - 1);
-        asset.changePrice();
-        fillFields();
-
-        if(game.isGameEnd()) FinishGame();
+        afterMoveEvent();
     }
 
     public void Hold(ActionEvent actionEvent) throws IOException {
-
-        player.setMovesLeft(player.getMovesLeft() - 1);
-        asset.changePrice();
-        fillFields();
-
-        if(game.isGameEnd()) FinishGame();
+        afterMoveEvent();
     }
 
     public void Sell(ActionEvent actionEvent) throws IOException {
@@ -147,4 +138,11 @@ public class MainForm {
         }
     }
 
+    void afterMoveEvent() throws IOException {
+        player.setMovesLeft(player.getMovesLeft() - 1);
+        asset.changePrice();
+        fillFields();
+
+        if(game.isGameEnd()) FinishGame();
+    }
 }

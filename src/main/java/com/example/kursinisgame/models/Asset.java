@@ -6,77 +6,33 @@ import java.util.Random;
 
 public class Asset {
 
-    public double assetPrice;
-    public double assetPriceWithTax;
-    public double assetTax = 0.05;
-    public Models model;
-    public List<Double> priceHistory = new ArrayList<>();
+    private static final double ASSET_TAX = 0.05;
 
-    public Asset(double assetPrice, Models model) {
+    protected double assetPrice;
+    protected double assetTax;
+    private PriceModel model;
+    private List<Double> priceHistory = new ArrayList<>();
+
+    protected Asset(double assetPrice, Models model, double assetTax) {
         this.assetPrice = assetPrice;
-        this.model = model;
-        this.assetPriceWithTax = assetPrice + (assetPrice * assetTax);
+        this.model = PriceModelFactory.createModel(model);
         this.priceHistory.add(assetPrice);
+        this.assetTax = assetTax;
     }
 
     public void changePrice(){
-
-        Random rand = new Random();
-
-        switch(model){
-
-            case RANDOM -> {
-                // Random increase or decrease by 1-10%
-                double changePercent = (1 + rand.nextInt(10)) / 100.0;
-                boolean increase = rand.nextBoolean();
-
-                if (increase) { assetPrice += assetPrice * changePercent;}
-                else { assetPrice -= assetPrice * changePercent;}
-            }
-
-            case CRASH -> {
-                // 5% chance of a 30% crash or 1-5% increase or decrease
-                if (rand.nextDouble() < 0.05) { assetPrice *= 0.7;}
-                else {
-                    double changePercent = (1 + rand.nextInt(5)) / 100.0;
-                    boolean increase = rand.nextBoolean();
-
-                    if (increase) {
-                        assetPrice += assetPrice * changePercent;
-                    } else {
-                        assetPrice -= assetPrice * changePercent;
-                    }
-                }
-            }
-
-            case VOLATILITY -> {
-                // 80% calm 2% increase or decrease | 20% spike 15% increase or decrease
-                double volatility = rand.nextDouble() < 0.8 ? 0.02 : 0.15;
-                boolean increase = rand.nextBoolean();
-
-                if (increase) {
-                    assetPrice += assetPrice * volatility;
-                } else {
-                    assetPrice -= assetPrice * volatility;
-                }
-            }
-
-        }
-
+        assetPrice = model.changePrice(assetPrice);
         priceHistory.add(assetPrice);
-        assetPriceWithTax = assetPrice + (assetPrice * assetTax);
     }
 
     public double getSMA() {
         double sum = 0;
-        for (int i = 0; i < priceHistory.size(); i++) {
-            sum += priceHistory.get(i);
-        }
-        return Math.round((sum / priceHistory.size()) * 100.0) / 100.0; // rounded to 2 decimals
+        for (Double aDouble : priceHistory) { sum += aDouble; }
+        return Math.round((sum / priceHistory.size()) * 100.0) / 100.0;
     }
 
     public double getAssetPriceWithTax() {
-        return assetPriceWithTax;
+        return assetPrice * (1 + assetTax);
     }
 
     public double getAssetPrice() {
@@ -85,5 +41,9 @@ public class Asset {
 
     public double getAssetTax() {
         return assetTax;
+    }
+
+    public List<Double> getPriceHistory() {
+        return priceHistory;
     }
 }
