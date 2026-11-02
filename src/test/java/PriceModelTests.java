@@ -1,9 +1,5 @@
-import com.example.kursinisgame.models.CrashPriceModel;
-import com.example.kursinisgame.models.Models;
-import com.example.kursinisgame.models.PriceModel;
-import com.example.kursinisgame.models.PriceModelFactory;
-import com.example.kursinisgame.models.RandomPriceModel;
-import com.example.kursinisgame.models.VolatilityPriceModel;
+import com.example.kursinisgame.models.*;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -18,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Instead, the tests check that every result is one of the values the model can
  * produce, and that over many runs every possible outcome actually appears.
  */
-public class PriceModelTests {
+class PriceModelTests {
 
     private static final int ITERATIONS = 1000;
     private static final double[] PRICES = {100.0, 37.5, 12345.67};
@@ -27,49 +23,49 @@ public class PriceModelTests {
     // ---------- RandomPriceModel: +/- 1..10 % ----------
 
     @Test
-    public void randomModelReturnsOnlyAllowedPrices() {
+    void randomModelReturnsOnlyAllowedPrices() {
         for (double price : PRICES) {
             assertOnlyAllowed(new RandomPriceModel(), price, randomAllowed(price));
         }
     }
 
     @Test
-    public void randomModelProducesEveryAllowedOutcome() {
+    void randomModelProducesEveryAllowedOutcome() {
         assertEveryOutcomeOccurs(new RandomPriceModel(), 100.0, randomAllowed(100.0));
     }
 
     // ---------- CrashPriceModel: 30 % crash or +/- 1..5 % ----------
 
     @Test
-    public void crashModelReturnsOnlyAllowedPrices() {
+    void crashModelReturnsOnlyAllowedPrices() {
         for (double price : PRICES) {
             assertOnlyAllowed(new CrashPriceModel(), price, crashAllowed(price));
         }
     }
 
     @Test
-    public void crashModelProducesEveryAllowedOutcome() {
+    void crashModelProducesEveryAllowedOutcome() {
         assertEveryOutcomeOccurs(new CrashPriceModel(), 100.0, crashAllowed(100.0));
     }
 
     // ---------- VolatilityPriceModel: +/- 2 % or +/- 15 % ----------
 
     @Test
-    public void volatilityModelReturnsOnlyAllowedPrices() {
+    void volatilityModelReturnsOnlyAllowedPrices() {
         for (double price : PRICES) {
             assertOnlyAllowed(new VolatilityPriceModel(), price, volatilityAllowed(price));
         }
     }
 
     @Test
-    public void volatilityModelProducesEveryAllowedOutcome() {
+    void volatilityModelProducesEveryAllowedOutcome() {
         assertEveryOutcomeOccurs(new VolatilityPriceModel(), 100.0, volatilityAllowed(100.0));
     }
 
     // ---------- PriceModelFactory ----------
 
     @Test
-    public void factoryCreatesMatchingModel() {
+    void factoryCreatesMatchingModel() {
         assertInstanceOf(RandomPriceModel.class, PriceModelFactory.createModel(Models.RANDOM));
         assertInstanceOf(CrashPriceModel.class, PriceModelFactory.createModel(Models.CRASH));
         assertInstanceOf(VolatilityPriceModel.class, PriceModelFactory.createModel(Models.VOLATILITY));
