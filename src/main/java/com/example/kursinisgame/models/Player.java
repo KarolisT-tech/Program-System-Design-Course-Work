@@ -38,4 +38,10 @@ public class Player {
     public void setMovesLeft(int movesLeft) {
         this.movesLeft = movesLeft;
     }
+
+    public void sell(int quantity, double price, double taxRate) {
+        double totalProfit = quantity * price;
+        assetQnt -= quantity;
+        balance = balance + totalProfit - (totalProfit * taxRate);
+    }
 }

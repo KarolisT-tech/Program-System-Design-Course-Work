@@ -6,7 +6,6 @@ module com.example.kursinisgame {
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
     requires javafx.graphics;
-    requires jdk.compiler;
     requires junit;
 
     opens com.example.kursinisgame to javafx.fxml;

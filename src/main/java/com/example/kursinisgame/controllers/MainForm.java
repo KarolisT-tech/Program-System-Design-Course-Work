@@ -80,7 +80,7 @@ public class MainForm {
 
     public void Buy(ActionEvent actionEvent) throws IOException {
         if(player.getBalance() < asset.getAssetPriceWithTax()) {
-            AlertGenerator.generateAlert(Alert.AlertType.INFORMATION, "Uh oh!", "Seems like you dont have enough money!", "Sell assests or hold!");
+            AlertGenerator.generateAlert(Alert.AlertType.INFORMATION, AlertGenerator.DEFAULT_TITLE, "Seems like you dont have enough money!", "Sell assests or hold!");
             return;
         }
         player.setBalance(player.getBalance() - asset.getAssetPrice());
@@ -95,7 +95,7 @@ public class MainForm {
     public void Sell(ActionEvent actionEvent) throws IOException {
 
         if(player.getAssetQnt() < 1) {
-            AlertGenerator.generateAlert(Alert.AlertType.INFORMATION, "Uh oh!", "Seems like you dont any assets!", "Buy assets or hold!");
+            AlertGenerator.generateAlert(Alert.AlertType.INFORMATION, AlertGenerator.DEFAULT_TITLE, "Seems like you dont any assets!", "Buy assets or hold!");
             return;
         }
 
@@ -103,7 +103,7 @@ public class MainForm {
         Parent parent = fxmlLoader.load();
 
         AssetSellerForm assetSellerForm = (AssetSellerForm) fxmlLoader.getController();
-        assetSellerForm.setData(player, asset, this, game);
+        assetSellerForm.setData(player, asset, this);
 
         Scene scene = new Scene(parent);
         Stage stage = new Stage();
