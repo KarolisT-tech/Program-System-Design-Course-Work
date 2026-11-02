@@ -15,4 +15,8 @@ public class TradingGame {
         return false;
     }
 
+    public boolean isLost() {
+        return player.getAssetQnt() == 0 && player.getBalance() == 0;
+    }
+
 }

@@ -114,28 +114,24 @@ public class MainForm {
 
     @FXML
     void FinishGame() throws IOException {
-        if(player.getAssetQnt() == 0 && player.getBalance() == 0) {
-
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("lost-view.fxml"));
-            Parent parent = fxmlLoader.load();
-
-            Scene scene = new Scene(parent);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
+        if (game.isLost()) {
+            showWindow(createLoader("lost-view.fxml").load());
+        } else {
+            FXMLLoader loader = createLoader("won-view.fxml");
+            Parent root = loader.load();
+            ((WonController) loader.getController()).setData(player, asset);
+            showWindow(root);
         }
-        else{
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("won-view.fxml"));
-            Parent parent = fxmlLoader.load();
+    }
 
-            WonController wonController = (WonController) fxmlLoader.getController();
-            wonController.setData(player, asset);
+    private FXMLLoader createLoader(String fxmlName) {
+        return new FXMLLoader(HelloApplication.class.getResource(fxmlName));
+    }
 
-            Scene scene = new Scene(parent);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
-        }
+    private void showWindow(Parent root) {
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     void afterMoveEvent() throws IOException {
